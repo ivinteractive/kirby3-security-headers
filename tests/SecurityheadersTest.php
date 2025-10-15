@@ -48,7 +48,7 @@ final class SecurityheadersTest extends TestCase
     {
         $sec = new Bnomei\SecurityHeaders();
         $this->assertIsArray($sec->option());
-        $this->assertCount(8, $sec->option());
+        $this->assertCount(10, $sec->option());
 
         $this->assertTrue($sec->option('debug')); // config "force"
 

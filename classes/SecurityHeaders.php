@@ -50,6 +50,8 @@ final class SecurityHeaders
             'debug' => option('debug'),
             'enabled' => option('bnomei.securityheaders.enabled', $enabled),
             'headers' => option('bnomei.securityheaders.headers'),
+            'nonce-enabled.script' => option('bnomei.securityheaders.nonce-enabled.script-src'),
+            'nonce-enabled.style' => option('bnomei.securityheaders.nonce-enabled.style-src'),
             'seed' => option('bnomei.securityheaders.seed'),
             'panel' => $isPanel,
             'panelnonces' => $panelHasNonces ? ['panel' => kirby()->nonce()] : [],
@@ -134,8 +136,12 @@ final class SecurityHeaders
         // add nonce for self
         if ($self = $this->option('seed')) {
             $nonce = $this->setNonce((string) $self);
-            $this->cspBuilder->nonce('script-src', $nonce);
-            $this->cspBuilder->nonce('style-src', $nonce);
+            if ($this->option('nonce-enabled.script')) {
+                $this->cspBuilder->nonce('script-src', $nonce);
+            }
+            if ($this->option('nonce-enabled.style')) {
+                $this->cspBuilder->nonce('style-src', $nonce);
+            }
         }
 
         // add panel nonces

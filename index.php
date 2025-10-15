@@ -2,14 +2,16 @@
 
 use Bnomei\SecurityHeaders;
 
-@include_once __DIR__ . '/vendor/autoload.php';
-
 Kirby::plugin('bnomei/securityheaders', [
     'options' => [
         'enabled' => null, // null => disable in panel and api
         'seed' => function () {
             return Url::stripPath(site()->url());
         },
+        'nonce-enabled' => [
+            'script-src' => true,
+            'style-src' => true,
+        ],
         'headers' => [
             "X-Powered-By" => "", // unset
             "X-Frame-Options" => "DENY",
