@@ -25,7 +25,9 @@
     "self": true,
     "data": true
   },
-  "media-src": [],
+  "media-src": {
+    "self": true
+  },
   "object-src": [],
   "plugin-types": [],
   "script-src": {
