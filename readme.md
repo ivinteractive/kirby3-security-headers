@@ -107,6 +107,16 @@ The Setter is applied after the Loader. Use it to add dynamic stuff like hashes 
 return [
     'bnomei.securityheaders.setter' => function (\Bnomei\SecurityHeaders $instance) {
         // https://github.com/paragonie/csp-builder#build-a-content-security-policy-programmatically
+            $instance->applyPresets([
+                \Bnomei\SecurityHeaders\Presets\CloudflareCdn::class,
+                \Bnomei\SecurityHeaders\Presets\GoogleAnalytics::class,
+                \Bnomei\SecurityHeaders\Presets\GoogleFonts::class,
+                \Bnomei\SecurityHeaders\Presets\GoogleMaps::class,
+                \Bnomei\SecurityHeaders\Presets\GoogleTagManager::class,
+                \Bnomei\SecurityHeaders\Presets\GoogleTranslate::class,
+                \Bnomei\SecurityHeaders\Presets\OneTrust::class,
+                \Bnomei\SecurityHeaders\Presets\YoutubeNoCookie::class,
+        ]);
         /** @var ParagonIE\CSPBuilder\CSPBuilder $csp */
         /*
             $csp = $instance->csp();
