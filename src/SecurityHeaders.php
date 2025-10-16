@@ -158,6 +158,16 @@ final class SecurityHeaders
     }
 
     /**
+     * @param  list<class-string<\Bnomei\SecurityHeaders\Presets\PresetInterface>>  $presets
+     */
+    public function applyPresets(array $presets)
+    {
+        foreach ($presets as $preset) {
+            (new $preset)->apply($this);
+        }
+    }
+
+    /**
      *
      */
     public function applySetter()

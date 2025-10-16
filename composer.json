@@ -27,7 +27,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Bnomei\\": "classes/"
+      "Bnomei\\": "src/"
     }
   },
   "config": {
@@ -48,7 +48,7 @@
     "phpunit/phpunit": "^9.5"
   },
   "scripts": {
-    "analyze": "phpstan analyse classes",
+    "analyze": "phpstan analyse src",
     "fix": "php-cs-fixer fix",
     "test": [
       "mkdir -p tests/logs",

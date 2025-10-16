@@ -21,7 +21,7 @@
     </php>
     <coverage>
         <include>
-            <directory suffix=".php">classes</directory>
+            <directory suffix=".php">src</directory>
         </include>
         <report>
             <clover outputFile="tests/logs/clover.xml"/>
