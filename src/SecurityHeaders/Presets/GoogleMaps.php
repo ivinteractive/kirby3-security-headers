@@ -7,50 +7,52 @@ use Bnomei\SecurityHeaders;
 class GoogleMaps implements PresetInterface
 {
 	private array $scripts = [
-        'https://*.googleapis.com',
-        'https://*.gstatic.com',
+        '*.googleapis.com',
+        '*.gstatic.com',
         '*.google.com',
-        'https://*.ggpht.com',
+        '*.ggpht.com',
         '*.googleusercontent.com',
-        'blob:',
 	];
 
 	private array $images = [
-        'https://*.googleapis.com',
-        'https://*.gstatic.com',
+        '*.googleapis.com',
+        '*.gstatic.com',
         '*.google.com',
         '*.googleusercontent.com',
-        'data:',
 	];
 
 	private array $connects = [
-        'https://*.googleapis.com',
+        '*.googleapis.com',
         '*.google.com',
-        'https://*.gstatic.com',
-        'data:',
-        'blob:',
+        '*.gstatic.com',
 	];
 
-	public function apply(SecurityHeaders $headers): void
+	public function apply(SecurityHeaders &$headers): void
 	{
 		$csp = $headers->csp();
 
+		$csp->setBlobAllowed('script-src', true);
+		$csp->setBlobAllowed('connect-src', true);
+		$csp->setBlobAllowed('worker-src', true);
+
+		$csp->setDataAllowed('img-src', true);
+		$csp->setDataAllowed('connect-src', true);
+
 		foreach ($this->scripts as $script) {
-			$csp->addSource('script', $script);
+			$headers->addPresetSource('script', $script);
 		}
 
 		foreach ($this->images as $image) {
-			$csp->addSource('image', $image);
+			$headers->addPresetSource('image', $image);
 		}
 
 		foreach ($this->connects as $connect) {
-			$csp->addSource('connect', $connect);
+			$headers->addPresetSource('connect', $connect);
 		}
 
-		$csp->addSource('frame', '*.google.com');
+		$headers->addPresetSource('frame', '*.google.com');
 
-		$csp->addSource('font', 'https://fonts.gstatic.com');
-		$csp->addSource('style', 'https://fonts.googleapis.com');
-		$csp->addSource('worker', 'blob:');
+		$headers->addPresetSource('font', 'https://fonts.gstatic.com');
+		$headers->addPresetSource('style', 'https://fonts.googleapis.com');
 	}
 }

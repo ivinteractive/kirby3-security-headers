@@ -6,10 +6,8 @@ use Bnomei\SecurityHeaders;
 
 class GoogleTranslate implements PresetInterface
 {
-	public function apply(SecurityHeaders $headers): void
-	{
-		$csp = $headers->csp();
-		
-    	$csp->addSource('script', 'translate.google.com');
+	public function apply(SecurityHeaders &$headers): void
+	{		
+    	$headers->addPresetSource('script', 'translate.google.com');
 	}
 }

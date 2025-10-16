@@ -6,10 +6,8 @@ use Bnomei\SecurityHeaders;
 
 class YoutubeNoCookie implements PresetInterface
 {
-	public function apply(SecurityHeaders $headers): void
-	{
-		$csp = $headers->csp();
-		
-    	$csp->addSource('frame', 'www.youtube-nocookie.com');
+	public function apply(SecurityHeaders &$headers): void
+	{		
+    	$headers->addPresetSource('frame', 'www.youtube-nocookie.com');
 	}
 }

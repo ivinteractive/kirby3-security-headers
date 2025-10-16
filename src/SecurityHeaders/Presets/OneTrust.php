@@ -6,17 +6,17 @@ use Bnomei\SecurityHeaders;
 
 class OneTrust implements PresetInterface
 {
-	public function apply(SecurityHeaders $headers): void
+	public function apply(SecurityHeaders &$headers): void
 	{
 		$csp = $headers->csp();
 
-    	$csp->addSource('script', 'cdn.cookielaw.org');
-    	$csp->addSource('style', 'cdn.cookielaw.org');
-    	$csp->addSource('image', 'cdn.cookielaw.org');
-    	$csp->addSource('connect', 'cdn.cookielaw.org');
+    	$headers->addPresetSource('script', 'cdn.cookielaw.org');
+    	$headers->addPresetSource('style', 'cdn.cookielaw.org');
+    	$headers->addPresetSource('image', 'cdn.cookielaw.org');
+    	$headers->addPresetSource('connect', 'cdn.cookielaw.org');
 
-    	$csp->addSource('connect', 'geolocation.onetrust.com');
-    	$csp->addSource('connect', 'privacyportal.onetrust.com');
+    	$headers->addPresetSource('connect', 'geolocation.onetrust.com');
+    	$headers->addPresetSource('connect', 'privacyportal.onetrust.com');
 
     	$csp->setAllowUnsafeInline('style-src', true);
 	}

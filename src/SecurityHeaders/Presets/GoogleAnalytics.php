@@ -6,18 +6,16 @@ use Bnomei\SecurityHeaders;
 
 class GoogleAnalytics implements PresetInterface
 {
-	public function apply(SecurityHeaders $headers): void
+	public function apply(SecurityHeaders &$headers): void
 	{
-		$csp = $headers->csp();
-
 		foreach (['connect', 'image', 'script'] as $type) {
-			$csp->addSource($type, '*.google-analytics.com');
-			$csp->addSource($type, '*.analytics.google.com');
-			$csp->addSource($type, '*.g.doubleclick.net');
-			$csp->addSource($type, '*.google.com');
-			$csp->addSource($type, 'pagead2.googlesyndication.com');
+			$headers->addPresetSource($type, '*.google-analytics.com');
+			$headers->addPresetSource($type, '*.analytics.google.com');
+			$headers->addPresetSource($type, '*.g.doubleclick.net');
+			$headers->addPresetSource($type, '*.google.com');
+			$headers->addPresetSource($type, 'pagead2.googlesyndication.com');
 		}
 
-		$csp->addSource('frame', 'td.doubleclick.net');
+		$headers->addPresetSource('frame', 'td.doubleclick.net');
 	}
 }

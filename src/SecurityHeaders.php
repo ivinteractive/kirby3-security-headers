@@ -29,6 +29,8 @@ final class SecurityHeaders
      */
     private $nonces;
 
+    private array $presetSources = [];
+
     public function __construct(array $options = [])
     {
         $isPanel = strpos(
@@ -157,6 +159,15 @@ final class SecurityHeaders
         return $this->cspBuilder;
     }
 
+    public function addPresetSource(string $directive, string $path): void
+    {
+        if (!array_key_exists($directive, $this->presetSources)) {
+            $this->presetSources[$directive] = [];
+        }
+
+        $this->presetSources[$directive][] = $path;
+    }
+
     /**
      * @param  list<class-string<\Bnomei\SecurityHeaders\Presets\PresetInterface>>  $presets
      */
@@ -164,6 +175,14 @@ final class SecurityHeaders
     {
         foreach ($presets as $preset) {
             (new $preset)->apply($this);
+        }
+
+        $csp = $this->csp();
+
+        foreach ($this->presetSources as $directive => $paths) {
+            foreach (array_unique($paths) as $path) {
+                $csp->addSource($directive, $path);
+            }
         }
     }
 

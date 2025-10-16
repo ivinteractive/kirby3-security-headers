@@ -6,5 +6,5 @@ use Bnomei\SecurityHeaders;
 
 interface PresetInterface
 {
-	public function apply(SecurityHeaders $headers): void; 
+	public function apply(SecurityHeaders &$headers): void; 
 }
