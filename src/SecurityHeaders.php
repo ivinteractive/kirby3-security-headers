@@ -53,7 +53,8 @@ final class SecurityHeaders
             'enabled' => option('bnomei.securityheaders.enabled', $enabled),
             'headers' => option('bnomei.securityheaders.headers'),
             'nonce-enabled.script' => option('bnomei.securityheaders.nonce-enabled.script-src'),
-            'nonce-enabled.style' => option('bnomei.securityheaders.nonce-enabled.style-src'),
+            'nonce-enabled.style' => option('bnomei.securityheaders.nonce-enabled.style-src', true),
+            'nonce-enabled.panel-style' => option('bnomei.securityheaders.nonce-enabled.panel-style-src', true),
             'seed' => option('bnomei.securityheaders.seed'),
             'panel' => $isPanel,
             'panelnonces' => $panelHasNonces ? ['panel' => kirby()->nonce()] : [],
@@ -152,7 +153,9 @@ final class SecurityHeaders
             foreach ($panelnonces as $nonce) {
                 $this->cspBuilder->nonce('img-src', $nonce);
                 $this->cspBuilder->nonce('script-src', $nonce);
-                $this->cspBuilder->nonce('style-src', $nonce);
+                if ($this->option('nonce-enabled.panel-style')) {
+                    $this->cspBuilder->nonce('style-src', $nonce);
+                }
             }
         }
 
