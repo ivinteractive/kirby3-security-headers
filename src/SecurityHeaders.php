@@ -33,10 +33,7 @@ final class SecurityHeaders
 
     public function __construct(array $options = [])
     {
-        $isPanel = strpos(
-            kirby()->request()->url()->toString(),
-            kirby()->urls()->panel()
-        ) !== false;
+        $isPanel = $this->isPanel();
         $isApi = strpos(
             kirby()->request()->url()->toString(),
             kirby()->urls()->api()
@@ -270,5 +267,13 @@ final class SecurityHeaders
         self::$singleton = $sec;
 
         return self::$singleton;
+    }
+
+    public function isPanel(): bool
+    {
+        return strpos(
+            kirby()->request()->url()->toString(),
+            kirby()->urls()->panel()
+        ) !== false;
     }
 }
