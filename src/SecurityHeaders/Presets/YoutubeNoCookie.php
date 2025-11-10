@@ -9,5 +9,6 @@ class YoutubeNoCookie implements PresetInterface
 	public function apply(SecurityHeaders &$headers): void
 	{		
     	$headers->addPresetSource('frame', 'www.youtube-nocookie.com');
+    	$headers->addPresetSource('image', 'i.ytimg.com');
 	}
 }
