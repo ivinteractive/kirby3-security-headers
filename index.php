@@ -14,10 +14,13 @@ Kirby::plugin('bnomei/securityheaders', [
         ],
         'headers' => [
             "X-Powered-By" => "", // unset
-            "X-Frame-Options" => "DENY",
-            "X-XSS-Protection" => "1; mode=block",
-            "X-Content-Type-Options" => "nosniff",
+
+            /* These lines should be set in NGINX config so it does not get set twice, but covers all URLs, not just ones handled by Kirby */
+            // "X-Frame-Options" => "DENY",
+            // "X-XSS-Protection" => "1; mode=block",
+            // "X-Content-Type-Options" => "nosniff",
             // "strict-transport-security" => "max-age=31536000; includeSubdomains; preload",
+
             "Referrer-Policy" => "strict-origin-when-cross-origin",
             // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy
             "Feature-Policy" => [
