@@ -6,6 +6,7 @@ namespace Bnomei;
 
 use Kirby\Data\Json;
 use Kirby\Data\Yaml;
+use Kirby\Http\Response;
 use Kirby\Toolkit\A;
 use Kirby\Filesystem\F;
 use Kirby\Filesystem\Mime;
@@ -275,5 +276,20 @@ final class SecurityHeaders
             kirby()->request()->url()->toString(),
             kirby()->urls()->panel()
         ) !== false;
+    }
+
+    public function setPanelCsp(mixed $response): mixed
+    {
+        if (
+            $response instanceof Response &&
+            $response->code() === 200 &&
+            $this->isPanel()
+        ) {
+            $response = new Response($response->body(), $response->type(), $response->code(), [
+                'Content-Security-Policy' => "media-src 'self'; frame-ancestors 'none'",
+            ]);
+        }
+
+        return $response;
     }
 }

@@ -89,6 +89,9 @@ Kirby::plugin('bnomei/securityheaders', [
         'route:before' => function (): void {
             SecurityHeaders::singleton()->sendHeaders();
         },
+        'route:after' => function (\Kirby\Http\Route $route, string $path, string $method, mixed $result, bool $final) {
+            return SecurityHeaders::singleton()->setPanelCsp($result);
+        },
     ],
     'pageMethods' => [
         'nonce' => function (string $key): ?string {
