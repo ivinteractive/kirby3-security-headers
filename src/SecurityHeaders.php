@@ -42,7 +42,7 @@ final class SecurityHeaders
         $panelHasNonces =  method_exists(kirby(), 'nonce');
 
         $enabled = !kirby()->system()->isLocal();
-        if ($isPanel || $isApi) {
+        if ($isApi) {
             $enabled = false;
         }
 
@@ -58,6 +58,7 @@ final class SecurityHeaders
             'panelnonces' => $panelHasNonces ? ['panel' => kirby()->nonce()] : [],
             'loader' => option('bnomei.securityheaders.loader'),
             'setter' => option('bnomei.securityheaders.setter'),
+            'panel-setter' => option('bnomei.securityheaders.panel-setter'),
         ];
         $this->options = array_merge($defaults, $options);
         $this->nonces = [];
@@ -200,6 +201,18 @@ final class SecurityHeaders
     }
 
     /**
+     *
+     */
+    public function applyPanelSetter()
+    {
+        // additional setters
+        $csp = $this->option('panel-setter');
+        if (is_callable($csp)) {
+            $csp($this);
+        }
+    }
+
+    /**
      * @return bool
      */
     public function sendHeaders(): bool
@@ -264,7 +277,12 @@ final class SecurityHeaders
 
         $sec = new SecurityHeaders($options);
         $sec->load();
-        $sec->applySetter();
+
+        if ($sec->isPanel()) {
+            $sec->applyPanelSetter();
+        } else {
+            $sec->applySetter();
+        }
         self::$singleton = $sec;
 
         return self::$singleton;
@@ -286,7 +304,7 @@ final class SecurityHeaders
             $this->isPanel()
         ) {
             $response = new Response($response->body(), $response->type(), $response->code(), [
-                'Content-Security-Policy' => "media-src 'self'; frame-ancestors 'none'",
+                'Content-Security-Policy' => $this->cspBuilder->compile(),
             ]);
         }
 

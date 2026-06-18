@@ -90,7 +90,11 @@ Kirby::plugin('bnomei/securityheaders', [
             SecurityHeaders::singleton()->sendHeaders();
         },
         'route:after' => function (\Kirby\Http\Route $route, string $path, string $method, mixed $result, bool $final) {
-            return SecurityHeaders::singleton()->setPanelCsp($result);
+            $sec = SecurityHeaders::singleton();
+
+            if ($sec->option('panel-setter')) {
+                return $sec->setPanelCsp($result);
+            }
         },
     ],
     'pageMethods' => [
