@@ -18,13 +18,6 @@ Kirby 5 Plugin for easier Security Headers setup.
 1. [Frontend Nonce](https://github.com/bnomei/kirby3-security-headers#frontend-nonce)
 1. [Settings](https://github.com/bnomei/kirby3-security-headers#settings)
 
-### Version Support
-
-| Plugin version | Kirby version |
-|---|---|
-| 2.7.x | 3.x |
-| 3.x | 5.x |
-
 ## Commercial Usage
 
 > <br>
@@ -41,9 +34,16 @@ Kirby 5 Plugin for easier Security Headers setup.
 
 ## Installation
 
-- unzip [master.zip](https://github.com/bnomei/kirby3-security-headers/archive/master.zip) as folder `site/plugins/kirby3-security-headers` or
-- `git submodule add https://github.com/bnomei/kirby3-security-headers.git site/plugins/kirby3-security-headers` or
-- `composer require bnomei/kirby3-security-headers`
+```
+composer require bnomei/kirby3-security-headers
+```
+
+#### Version Support
+
+| Plugin version | Kirby version |
+|---|---|
+| 2.7.x | 3.x |
+| 3.x | 5.x |
 
 ## Setup
 
