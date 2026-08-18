@@ -1,7 +1,7 @@
 {
   "name": "bnomei/kirby3-security-headers",
   "type": "kirby-plugin",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "license": "MIT",
   "description": "Kirby 5 Plugin for easier Security Headers setup",
   "authors": [
